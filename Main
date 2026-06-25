@@ -56,3 +56,7 @@ select u.user_id, u.full_name, b.booking_id
 from users u
 left join Bookings b
 ON u.user_id = b.user_id;
+
+-- find all bookings with total cost greater than the average total cost of all bookings
+select booking_id, match_id, round(total_cost,0) from bookings
+where total_cost > ( select avg (total_cost) from bookings);
