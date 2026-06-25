@@ -50,3 +50,9 @@ select b.booking_id,u.full_name,m.fixture,b.seat_number,b.payment_status, round(
   from bookings b 
 inner join users u on b.booking_id = u.user_id
 inner join matches m on b.match_id = m.match_id;
+
+--  find all users and their bookings, including users without any bookings
+select u.user_id, u.full_name, b.booking_id
+from users u
+left join Bookings b
+ON u.user_id = b.user_id;
