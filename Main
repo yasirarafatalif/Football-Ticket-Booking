@@ -44,3 +44,9 @@ where full_name ilike 'Tanvir%' or full_name ilike '%Haque%';
 select booking_id, user_id,match_id,
   coalesce(payment_status, 'Action Required') as payment_status  from bookings 
 where payment_status is null;
+
+-- find all bookings with matching user and match details, including total cost rounded to the nearest whole number
+select b.booking_id,u.full_name,m.fixture,b.seat_number,b.payment_status, round(b.total_cost,0) AS totaL_cost
+  from bookings b 
+inner join users u on b.booking_id = u.user_id
+inner join matches m on b.match_id = m.match_id;
