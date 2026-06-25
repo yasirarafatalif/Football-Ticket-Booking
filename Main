@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS Bookings;
+DROP TABLE IF EXISTS Matches;
+DROP TABLE IF EXISTS Users;
+
 -- create users table 
 CREATE TABLE Users (
     user_id SERIAL PRIMARY KEY,
@@ -23,7 +27,15 @@ CREATE TABLE Bookings (
     match_id INT not null references matches(match_id),
     seat_number varchar not null,
     payment_status VARCHAR(20) check (
-        payment_status in ('Pending', 'Paid', 'Cancelled')
+        payment_status in ('Pending', 'Confirmed', 'Cancelled', 'Refunded')
     ),
     total_cost DECIMAL(10,2) CHECK (total_cost >= 0)
 );
+
+-- find all available matches in the Champions League tournament category
+select match_id , fixture, base_ticket_price from matches 
+where tournament_category = 'Champions League' and  match_status = 'Available';
+
+-- find all users with names starting with 'Tanvir' or containing 'Haque'
+select user_id,full_name , email  from users 
+where full_name ilike 'Tanvir%' or full_name ilike '%Haque%';
